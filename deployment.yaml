@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: priyanshuv-hwapp
+  labels: 
+    app: priyanshuv-hwapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: priyanshuv-hwapp
+  template:
+    metadata:
+      labels:
+        app: priyanshuv-hwapp
+    spec:
+      containers:
+        - name: hw-api
+          image: priyanshuv1238/hello-world:tagversion
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: priyanshuv-hwapp
+spec:
+  type: LoadBalancer
+  selector:
+    app: priyanshuv-hwapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
